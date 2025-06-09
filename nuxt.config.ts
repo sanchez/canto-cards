@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     runtimeConfig: {},
 
     imports: {
-        dirs: ["types", "schema"],
+        dirs: ["types", "schema", "phrases"],
     },
 
     sourcemap: {
