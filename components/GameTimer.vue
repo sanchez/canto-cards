@@ -1,3 +1,18 @@
+<template>
+    <div class="relative">
+        <div
+            class="absolute -top-8 left-1/2 -translate-x-1/2 text-xl font-mono font-bold tracking-wider text-slate-700">
+            {{ formattedTime }}
+        </div>
+        <div
+            class="relative w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+            <div
+                class="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-indigo-500 to-rose-500 transition-all duration-1000 ease-linear shadow-lg"
+                :style="{ width: `${progressPercentage}%` }" />
+        </div>
+    </div>
+</template>
+
 <script setup lang="ts">
     const props = defineProps<{
         duration: number;
@@ -40,18 +55,3 @@
         }
     );
 </script>
-
-<template>
-    <div class="relative">
-        <div
-            class="absolute -top-8 left-1/2 -translate-x-1/2 text-xl font-mono font-bold tracking-wider text-slate-700 dark:text-slate-300">
-            {{ formattedTime }}
-        </div>
-        <div
-            class="relative w-full h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden shadow-inner">
-            <div
-                class="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-indigo-500 to-rose-500 transition-all duration-1000 ease-linear shadow-lg"
-                :style="{ width: `${progressPercentage}%` }" />
-        </div>
-    </div>
-</template>

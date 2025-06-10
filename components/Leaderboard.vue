@@ -13,7 +13,7 @@
                 class="text-4xl font-bold bg-gradient-to-r from-rose-600 to-indigo-600 text-transparent bg-clip-text">
                 Game Over!
             </h2>
-            <p class="text-slate-600 dark:text-slate-400">Final Standings</p>
+            <p class="text-slate-600">Final Standings</p>
         </div>
 
         <div
@@ -22,32 +22,31 @@
             <div
                 v-for="(player, index) in sortedPlayers"
                 :key="player.name"
-                class="flex items-center justify-between p-5 bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-xl border-2 transition-all duration-200"
+                class="flex items-center justify-between p-5 bg-white/70 backdrop-blur-sm rounded-xl border-2 transition-all duration-200"
                 :class="[
                     index === 0
-                        ? 'border-amber-200 dark:border-amber-900 shadow-lg shadow-amber-100 dark:shadow-amber-900/20'
+                        ? 'border-amber-200  shadow-lg shadow-amber-100 '
                         : index === 1
-                        ? 'border-slate-200 dark:border-slate-700'
+                        ? 'border-slate-200 '
                         : index === 2
-                        ? 'border-orange-200 dark:border-orange-900'
-                        : 'border-slate-100 dark:border-slate-800',
+                        ? 'border-orange-200 '
+                        : 'border-slate-100 ',
                 ]">
                 <div class="flex items-center gap-4">
                     <span
                         class="w-8 h-8 flex items-center justify-center rounded-lg text-xl font-bold"
                         :class="[
                             index === 0
-                                ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300'
+                                ? 'bg-amber-100 text-amber-700'
                                 : index === 1
-                                ? 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+                                ? 'bg-slate-100 text-slate-700'
                                 : index === 2
-                                ? 'bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300'
-                                : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400',
+                                ? 'bg-orange-100 text-orange-700'
+                                : 'bg-slate-50 text-slate-600',
                         ]">
                         {{ index + 1 }}
                     </span>
-                    <span
-                        class="text-lg font-medium text-slate-800 dark:text-slate-200">
+                    <span class="text-lg font-medium text-slate-800">
                         {{ player.name }}
                     </span>
                 </div>
@@ -56,18 +55,16 @@
                         class="text-2xl font-bold"
                         :class="[
                             index === 0
-                                ? 'text-amber-600 dark:text-amber-400'
+                                ? 'text-amber-600'
                                 : index === 1
-                                ? 'text-slate-600 dark:text-slate-400'
+                                ? 'text-slate-600'
                                 : index === 2
-                                ? 'text-orange-600 dark:text-orange-400'
-                                : 'text-slate-500 dark:text-slate-500',
+                                ? 'text-orange-600'
+                                : 'text-slate-500',
                         ]">
                         {{ player.score }}
                     </span>
-                    <span class="text-sm text-slate-500 dark:text-slate-400"
-                        >points</span
-                    >
+                    <span class="text-sm text-slate-500">points</span>
                 </div>
             </div>
         </div>

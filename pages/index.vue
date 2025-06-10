@@ -3,16 +3,24 @@
 </script>
 
 <template>
-    <div class="w-full space-y-8">
-        <h1
-            class="text-4xl sm:text-5xl font-bold text-center text-white/90 font-display">
-            Canto Cards
-        </h1>
+    <Header>
+        Canto-Cards!
 
+        <template #subtitle>
+            A fun party game to test your knowledge of Cantonese and learn some
+            new words! To get started, add players below and click "Get Started"
+            to start the game.
+        </template>
+    </Header>
+
+    <PlayerManager />
+
+    <Button>Get Started</Button>
+
+    <div class="w-full space-y-8">
         <ClientOnly>
             <template v-if="!isGameOver">
                 <div class="space-y-6">
-                    <PlayerManager />
                     <GameBoard />
                 </div>
             </template>

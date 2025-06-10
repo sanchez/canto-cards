@@ -17,7 +17,7 @@
                     class="absolute top-0 left-0 p-20 flex flex-col gap-12 text-white">
                     <div
                         class="font-semibold text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">
-                        Suite
+                        Canto-Cards
                     </div>
                     <div class="max-w-md">
                         <p>
