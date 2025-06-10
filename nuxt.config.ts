@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     compatibilityDate: "2024-11-01",
     devtools: { enabled: true },
-    modules: [],
+    modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt"],
     ssr: false,
 
     experimental: {
@@ -10,9 +10,8 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {},
-
     imports: {
-        dirs: ["types", "schema", "phrases"],
+        dirs: ["types", "schema", "phrases", "composables"],
     },
 
     sourcemap: {
