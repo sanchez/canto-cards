@@ -68,11 +68,12 @@
                 </div>
             </div>
         </div>
-
-        <button
+        <Button
             @click="resetGame"
-            class="w-full py-4 bg-gradient-to-r from-indigo-500 to-rose-500 text-white text-lg font-medium rounded-xl hover:from-indigo-600 hover:to-rose-600 active:scale-[0.98] transform transition-all duration-200 shadow-lg hover:shadow-xl">
+            variant="gradient"
+            size="lg"
+            block>
             Play Again
-        </button>
+        </Button>
     </div>
 </template>

@@ -11,7 +11,6 @@ You are a senior software developer, working on a large open source repository. 
 -   Prioritize functional and declarative programming patterns; avoid using classes.
 -   Emphasize iteration and modularization to follow DRY principles and minimize code duplication.
 -   Break up large components into smaller, reusable components to enhance maintainability and readability.
--   Generic cross-application components should be placed in the `modules/ui/components` directory, while application-specific components should be placed in the `components` directory.
 
 # Folder Structure
 
@@ -19,7 +18,6 @@ You are a senior software developer, working on a large open source repository. 
 -   **composables**: Contains reusable logic that can be shared across components.
 -   **layouts**: Contains layout components that define the structure of the application.
 -   **middleware**: Contains middleware functions that can be used to handle authentication, authorization, and other logic that needs to run before rendering a page.
--   **modules**: Contains reusable modules that can be shared across applications. Each module should have its own directory, with a `components` directory for reusable components, a `composables` directory for reusable logic.
 -   **pages**: Contains the pages of the application, with each page being a Vue component.
 -   **plugins**: Contains plugins that can be used to extend the functionality of Nuxt 3.
 -   **public**: Contains static assets that can be served directly by the server.
@@ -30,7 +28,6 @@ You are a senior software developer, working on a large open source repository. 
 
 -   Nuxt 3 provides auto imports, so there's no need to manually import 'ref', 'useState', or 'useRouter'.
 -   Components in the `components` directory do not need to be imported, instead the name of the component will follow the PascalCase convention of the directory. e.g. `components/Menu/Item.vue` can be used as `<MenuItem />` in any component.
--   Components in the `modules/ui/components` directory do not need to be imported, instead the name of the component will follow the PascalCase convention of the directory with a `Ui` prefix. e.g. `modules/ui/components/Menu/Item.vue` can be used as `<UiMenuItem />` in any component.
 -   Composables in the `composables` directory do not need to be imported, instead the name of the composable will follow the camelCase convention of the directory. e.g. `composables/useMenu.ts` can be used as `useMenu()` in any component.
 
 # Server-Side Logic
@@ -97,6 +94,31 @@ module.exports = {
     },
 };
 ```
+
+# Component Structure
+
+-   Each component should have a clear structure, including:
+    -   A `<template>` section for the HTML structure.
+    -   A `<script setup lang="ts">` section for the component logic.
+-   The `<template>` section should:
+    -   Use Tailwind CSS classes for styling.
+    -   Use Vue's built-in directives (e.g., `v-if`, `v-for`, `v-bind`, `v-on`) for dynamic behavior.
+    -   Use scoped styles where necessary to avoid conflicts with global styles.
+    -   Use slots for reusable content where appropriate.
+-   The `<script setup lang="ts">` section should:
+    -   Import necessary composables and components.
+    -   Define reactive state using `ref` or `reactive`.
+    -   Use TypeScript interfaces to define the shape of props and emitted events.
+    -   When defining props, use the `defineProps` with the traditional object syntax to ensure type safety and clarity, like so:
+
+```typescript
+const props = defineProps<{
+    title: string;
+    items: Array<{ id: number; name: string }>;
+}>();
+```
+
+-   The `<template>` should be defined first before the `<script setup lang="ts">` section to maintain a clear separation of concerns and improve readability.
 
 # Documentation
 

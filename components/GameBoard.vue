@@ -20,25 +20,27 @@
                 <div
                     class="flex justify-center gap-3 px-4"
                     v-auto-animate>
-                    <button
+                    <Button
                         v-for="difficulty in 5"
                         :key="difficulty"
                         @click="setDifficulty(difficulty)"
-                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center text-lg sm:text-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95 transform"
-                        :class="[
+                        :variant="
                             gameState.currentDifficulty === difficulty
-                                ? 'bg-gradient-to-br from-rose-500 to-indigo-500 text-white'
-                                : 'bg-white/70 backdrop-blur-sm text-slate-700 hover:bg-white',
-                        ]">
+                                ? 'gradient'
+                                : 'outline'
+                        "
+                        icon>
                         {{ difficulty }}
-                    </button>
+                    </Button>
                 </div>
-                <button
+                <Button
                     v-if="gameState.isDifficultySelected"
                     @click="startRound"
-                    class="w-full py-4 bg-gradient-to-r from-indigo-500 to-rose-500 text-white text-lg font-medium rounded-xl hover:from-indigo-600 hover:to-rose-600 active:scale-[0.98] transform transition-all duration-200 shadow-lg hover:shadow-xl">
+                    variant="gradient"
+                    size="lg"
+                    block>
                     Begin Turn
-                </button>
+                </Button>
             </div>
         </div>
 
@@ -60,16 +62,18 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <button
+                    <Button
                         @click="isRevealed = !isRevealed"
-                        class="flex-1 px-4 py-3 bg-gradient-to-r from-indigo-500 to-rose-500 text-white rounded-xl hover:from-indigo-600 hover:to-rose-600 active:scale-[0.98] transform transition-all duration-200 shadow-lg hover:shadow-xl text-base sm:text-lg">
+                        variant="gradient"
+                        size="md">
                         {{ isRevealed ? "Hide" : "Show" }} English
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         @click="nextPhrase"
-                        class="px-4 py-3 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 active:scale-[0.98] transform transition-all duration-200">
+                        variant="ghost"
+                        size="md">
                         Skip Phrase
-                    </button>
+                    </Button>
                 </div>
 
                 <div
@@ -86,12 +90,13 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <button
+                    <Button
                         v-if="isRevealed"
                         @click="handleCorrectGuess"
-                        class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-lg font-medium rounded-xl hover:from-emerald-600 hover:to-teal-600 active:scale-[0.98] transform transition-all duration-200 shadow-lg hover:shadow-xl">
+                        variant="gradient"
+                        size="lg">
                         Correct Guess! +1 Point
-                    </button>
+                    </Button>
                 </div>
             </div>
         </template>

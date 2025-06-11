@@ -3,23 +3,21 @@ interface Player {
     score: number;
 }
 
+type GameStage = "players" | "difficulty" | "activeRound" | "gameOver";
+
 interface GameState {
     players: Player[];
     currentPlayerIndex: number;
-    isGameStarted: boolean;
-    isRoundActive: boolean;
+    stage: GameStage;
     currentDifficulty: number;
-    isDifficultySelected: boolean;
 }
 
 export const useGameState = () => {
     const gameState = useState<GameState>("gameState", () => ({
         players: [],
         currentPlayerIndex: 0,
-        isGameStarted: false,
-        isRoundActive: false,
+        stage: "players",
         currentDifficulty: 1,
-        isDifficultySelected: false,
     }));
 
     const currentPlayer = computed(
@@ -37,22 +35,19 @@ export const useGameState = () => {
 
     const startGame = () => {
         if (gameState.value.players.length === 0) return;
-        gameState.value.isGameStarted = true;
         gameState.value.currentPlayerIndex = 0;
     };
 
     const setDifficulty = (difficulty: number) => {
         gameState.value.currentDifficulty = difficulty;
-        gameState.value.isDifficultySelected = true;
     };
 
     const startRound = () => {
-        if (!gameState.value.isDifficultySelected) return;
-        gameState.value.isRoundActive = true;
+        if (gameState.value.stage !== "difficulty") return;
+        gameState.value.stage = "activeRound";
     };
     const endRound = () => {
-        gameState.value.isRoundActive = false;
-        gameState.value.isDifficultySelected = false;
+        gameState.value.stage = "players";
         gameState.value.currentPlayerIndex =
             (gameState.value.currentPlayerIndex + 1) %
             gameState.value.players.length;
@@ -68,19 +63,10 @@ export const useGameState = () => {
         gameState.value = {
             players: [],
             currentPlayerIndex: 0,
-            isGameStarted: false,
-            isRoundActive: false,
+            stage: "players",
             currentDifficulty: 1,
-            isDifficultySelected: false,
         };
     };
-
-    const isGameOver = computed(
-        () =>
-            gameState.value.isGameStarted &&
-            gameState.value.currentPlayerIndex === 0 &&
-            !gameState.value.isRoundActive
-    );
 
     return {
         gameState,
@@ -92,7 +78,6 @@ export const useGameState = () => {
         endRound,
         addPoint,
         resetGame,
-        isGameOver,
         setDifficulty,
     };
 };
