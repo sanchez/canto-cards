@@ -7,7 +7,7 @@ export const CANTO_TOTAL: WordGenerator[] = [
         },
         (fields) => ({
             canto: `${fields.person.canto} ${fields.not.canto} chung-ee ${fields.color.canto}`,
-            english: `${fields.person.english} ${fields.not.english} likes ${fields.color.english}`,
+            english: `${fields.person.english} ${fields.not.english} like ${fields.color.english}`,
             difficulty: 1,
         })
     ),

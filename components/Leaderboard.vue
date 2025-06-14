@@ -1,79 +1,85 @@
-<script setup lang="ts">
-    const { gameState, resetGame } = useGameState();
-
-    const sortedPlayers = computed(() =>
-        [...gameState.value.players].sort((a, b) => b.score - a.score)
-    );
-</script>
-
 <template>
-    <div class="space-y-8">
-        <div class="text-center space-y-2">
-            <h2
-                class="text-4xl font-bold bg-gradient-to-r from-rose-600 to-indigo-600 text-transparent bg-clip-text">
-                Game Over!
-            </h2>
-            <p class="text-slate-600">Final Standings</p>
-        </div>
+    <Header>
+        Game Over!
 
-        <div
-            v-auto-animate
-            class="space-y-4">
+        <template #subtitle>
+            Congratulations to all players, and big congratulations to our
+            winner{{ winnersPlural }}: {{ nameDisplay }}
+        </template>
+    </Header>
+
+    <div class="w-full grid grid-cols-1 gap-3">
+        <template v-for="([score, players], index) in scores">
             <div
-                v-for="(player, index) in sortedPlayers"
-                :key="player.name"
-                class="flex items-center justify-between p-5 bg-white/70 backdrop-blur-sm rounded-xl border-2 transition-all duration-200"
-                :class="[
-                    index === 0
-                        ? 'border-amber-200  shadow-lg shadow-amber-100 '
-                        : index === 1
-                        ? 'border-slate-200 '
-                        : index === 2
-                        ? 'border-orange-200 '
-                        : 'border-slate-100 ',
-                ]">
-                <div class="flex items-center gap-4">
-                    <span
-                        class="w-8 h-8 flex items-center justify-center rounded-lg text-xl font-bold"
-                        :class="[
-                            index === 0
-                                ? 'bg-amber-100 text-amber-700'
-                                : index === 1
-                                ? 'bg-slate-100 text-slate-700'
-                                : index === 2
-                                ? 'bg-orange-100 text-orange-700'
-                                : 'bg-slate-50 text-slate-600',
-                        ]">
-                        {{ index + 1 }}
-                    </span>
-                    <span class="text-lg font-medium text-slate-800">
-                        {{ player.name }}
-                    </span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span
-                        class="text-2xl font-bold"
-                        :class="[
-                            index === 0
-                                ? 'text-amber-600'
-                                : index === 1
-                                ? 'text-slate-600'
-                                : index === 2
-                                ? 'text-orange-600'
-                                : 'text-slate-500',
-                        ]">
-                        {{ player.score }}
-                    </span>
-                    <span class="text-sm text-slate-500">points</span>
+                v-for="player in players"
+                :key="player.name">
+                <div
+                    class="flex items-center justify-between p-4 rounded border-2"
+                    :class="{
+                        'bg-green-100 border-green-500': index === 0,
+                        'bg-yellow-100 border-yellow-500': index === 1,
+                        'bg-gray-100 border-gray-500': index > 1,
+                    }">
+                    <div>{{ player.name }}</div>
+                    <div>{{ score }}</div>
                 </div>
             </div>
-        </div>
-        <Button
-            @click="resetGame"
-            variant="gradient"
-            size="lg"
-            block>
-            Play Again
-        </Button>
+        </template>
     </div>
+
+    <div>
+        Thanks for trying and playing my game, I hope you had fun and possibly
+        even learnt something, if you would like to play another game with the
+        same difficulty and players simply click the Play Again button:
+    </div>
+
+    <Button @click="playAgain">Play Again</Button>
+
+    <div />
+
+    <div>
+        Or if you would like to change the players or difficulty then click the
+        Change Players button:
+    </div>
+
+    <Button @click="changePlayers">Change Players</Button>
 </template>
+
+<script setup lang="ts">
+    const { gameState } = useGameState();
+
+    const scores = computed(() => {
+        const lookups = gameState.value.players.reduce((p, c) => {
+            if (!p[c.score]) {
+                p[c.score] = [];
+            }
+
+            p[c.score].push(c);
+            return p;
+        }, {} as Record<number, Player[]>);
+
+        return Object.entries(lookups).sort(
+            ([scoreA], [scoreB]) => Number(scoreB) - Number(scoreA)
+        );
+    });
+
+    const winners = computed(() => {
+        return scores.value[0][1];
+    });
+
+    const nameDisplay = computed(() => {
+        return winners.value.map((player) => player.name).join(", ");
+    });
+
+    const winnersPlural = computed(() => {
+        return winners.value.length > 1 ? "s" : "";
+    });
+
+    function playAgain() {
+        gameState.value.stage = "activeRound";
+    }
+
+    function changePlayers() {
+        gameState.value.stage = "players";
+    }
+</script>

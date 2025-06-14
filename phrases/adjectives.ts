@@ -1,5 +1,5 @@
 export const CANTO_NOT: WordGenerator[] = [
-    minDifficulty(1, { canto: "mou", english: "not", difficulty: 1 }),
+    minDifficulty(1, { canto: "mmm", english: "not", difficulty: 1 }),
     minDifficulty(1, { canto: "", english: "", difficulty: 1 }),
 ];
 
