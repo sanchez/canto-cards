@@ -46,7 +46,7 @@ export function dependOn<T extends Record<string, PhraseResponse>>(
 
 export function minDifficulty(
     difficulty: number,
-    phrase: PhraseResponse
+    phrase: Pick<PhraseResponse, "canto" | "english">
 ): WordGenerator {
     return (d: number) => {
         if (d < difficulty) {
@@ -55,7 +55,7 @@ export function minDifficulty(
         return {
             canto: phrase.canto,
             english: phrase.english,
-            difficulty: phrase.difficulty,
+            difficulty: difficulty,
         };
     };
 }
