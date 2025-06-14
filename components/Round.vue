@@ -15,7 +15,7 @@
 
     <template v-else>
         <div class="absolute top-4 right-4">
-            Remaining Time: {{ friendlyTime }}s
+            Remaining Time: {{ remaining }}s
         </div>
 
         <Header>
@@ -65,8 +65,21 @@
         return gameState.value.players[playerIndex.value];
     });
 
-    const timer = useTimer(60);
-    const friendlyTime = computed(() => Math.floor(timer.remainingTime.value));
+    const {
+        remaining,
+        reset,
+        start: timerStart,
+    } = useCountdown(60, {
+        onComplete() {
+            pause.value = true;
+            playerIndex.value += 1;
+            history.value = [];
+
+            if (playerIndex.value >= gameState.value.players.length) {
+                gameState.value.stage = "gameOver";
+            }
+        },
+    });
 
     const pause = ref(true);
 
@@ -100,7 +113,8 @@
 
     function start() {
         newPhrase();
-        timer.reset();
+        reset();
+        timerStart();
     }
 
     function success() {
@@ -111,16 +125,4 @@
     function fail() {
         newPhrase();
     }
-
-    watch(timer.remainingTime, (x) => {
-        if (x <= 0 && !pause.value) {
-            pause.value = true;
-            playerIndex.value += 1;
-            history.value = [];
-
-            if (playerIndex.value >= gameState.value.players.length) {
-                gameState.value.stage = "gameOver";
-            }
-        }
-    });
 </script>
