@@ -18,4 +18,18 @@ export default defineNuxtConfig({
         client: true,
         server: true,
     },
+
+    app: {
+        baseURL: process.env.NODE_ENV === "production" ? "/canto-cards/" : "/",
+        buildAssetsDir: "assets",
+        head: {
+            link: [
+                {
+                    rel: "icon",
+                    type: "image/x-icon",
+                    href: "/canto-cards/favicon.ico",
+                },
+            ],
+        },
+    },
 });
